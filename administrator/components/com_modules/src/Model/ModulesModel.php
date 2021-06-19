@@ -13,6 +13,7 @@ namespace Joomla\Component\Modules\Administrator\Model;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\DatabaseQuery;
@@ -178,6 +179,8 @@ class ModulesModel extends ListModel
 		$listOrder = $this->getState('list.ordering', 'a.position');
 		$listDirn  = $this->getState('list.direction', 'asc');
 
+		$positionList = $this->getValidPositions();
+
 		// If ordering by fields that need translate we need to sort the array of objects after translating them.
 		if (in_array($listOrder, array('pages', 'name')))
 		{
@@ -201,7 +204,14 @@ class ModulesModel extends ListModel
 				$this->setState('list.start', 0);
 			}
 
-			return array_slice($result, $limitstart, $limit ?: null);
+			$result = array_slice($result, $limitstart, $limit ?: null);
+
+			foreach ($result as $row)
+			{
+				$row->activePosition = in_array($row->position, $positionList);
+			}
+
+			return $result;
 		}
 
 		// If ordering by fields that doesn't need translate just order the query.
@@ -225,6 +235,11 @@ class ModulesModel extends ListModel
 
 		// Translate the results.
 		$this->translate($result);
+
+		foreach ($result as $row)
+		{
+			$row->activePosition = in_array($row->position, $positionList);
+		}
 
 		return $result;
 	}
@@ -478,5 +493,56 @@ class ModulesModel extends ListModel
 			->bind(':client_id', $clientId, ParameterType::INTEGER);
 
 		return $query;
+	}
+
+	/**
+	 * Method to get the positions corresponding to a template.
+	 *
+	 * @return  array	List of all active template's position names.
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 */
+	public function getValidPositions()
+	{
+		$clientId = $this->getState('client_id');
+		$positions = [];
+
+		$db = $this->getDbo();
+		$query = $db->getQuery(true);
+		$query->select(
+			[
+				$db->quoteName('template'),
+			]
+		)
+			->from($db->quoteName('#__template_styles'));
+
+		// Filter the active template
+		$query->where($db->quoteName('home') . ' = 1')
+			->where($this->_db->quoteName('client_id') . ' = :client_id')
+			->bind(':client_id', $clientId, ParameterType::INTEGER);;
+		$db->setQuery($query);
+
+		$templateName = $db->loadObjectList()[0]->template;
+
+		if (isset($templateName))
+		{
+			$basePath = $clientId ? JPATH_ADMINISTRATOR : JPATH_SITE;
+			$path = Path::clean($basePath . '/templates/' . $templateName . '/templateDetails.xml');
+
+			if (file_exists($path))
+			{
+				$xml = simplexml_load_file($path);
+
+				if (isset($xml->positions[0]))
+				{
+					foreach ($xml->positions[0] as $position)
+					{
+						$positions[] = (string) $position;
+					}
+				}
+			}
+		}
+
+		return $positions;
 	}
 }
