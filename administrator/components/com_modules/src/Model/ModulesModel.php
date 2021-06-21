@@ -519,7 +519,7 @@ class ModulesModel extends ListModel
 		// Filter the active template
 		$query->where($db->quoteName('home') . ' = 1')
 			->where($this->_db->quoteName('client_id') . ' = :client_id')
-			->bind(':client_id', $clientId, ParameterType::INTEGER);;
+			->bind(':client_id', $clientId, ParameterType::INTEGER);
 		$db->setQuery($query);
 
 		$templateName = $db->loadObjectList()[0]->template;
