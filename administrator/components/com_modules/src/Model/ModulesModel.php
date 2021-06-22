@@ -505,26 +505,32 @@ class ModulesModel extends ListModel
 	public function getValidPositions()
 	{
 		$clientId = $this->getState('client_id');
-		$positions = [];
-
 		$db = $this->getDbo();
+
+		// Get List of Template Style IDs that are used in Menus
+		$templateStylesQuery = $db->getQuery(true);
+		$templateStylesQuery->select('DISTINCT ' . $db->quoteName('template_style_id'))
+			->from($db->quoteName('#__menu'));
+
+		$templateStylesQuery->where($this->_db->quoteName('published') . ' = 1')
+			->where($db->quoteName('client_id') . ' = :clientid');
+
+		// Get List of Template Names that are either set as Default or used in a menu
 		$query = $db->getQuery(true);
-		$query->select(
-			[
-				$db->quoteName('template'),
-			]
-		)
+		$query->select('DISTINCT ' . $db->quoteName('template'))
 			->from($db->quoteName('#__template_styles'));
 
-		// Filter the active template
-		$query->where($db->quoteName('home') . ' = 1')
-			->where($this->_db->quoteName('client_id') . ' = :client_id')
+		$query->where($db->quoteName('client_id') . ' = :client_id')
+			->where($db->quoteName('home') . ' = 1')
+			->orWhere($db->quoteName('id') . ' IN (' . $templateStylesQuery . ')')
+			->bind(':clientid', $clientId, ParameterType::INTEGER)
 			->bind(':client_id', $clientId, ParameterType::INTEGER);
 		$db->setQuery($query);
+		$templateList = $db->loadColumn();
 
-		$templateName = $db->loadObjectList()[0]->template;
+		$positions = [];
 
-		if (isset($templateName))
+		foreach ($templateList as $templateName)
 		{
 			$basePath = $clientId ? JPATH_ADMINISTRATOR : JPATH_SITE;
 			$path = Path::clean($basePath . '/templates/' . $templateName . '/templateDetails.xml');
@@ -537,7 +543,10 @@ class ModulesModel extends ListModel
 				{
 					foreach ($xml->positions[0] as $position)
 					{
-						$positions[] = (string) $position;
+						if (!array_key_exists((string) $position, $positions))
+						{
+							$positions[] = (string) $position;
+						}
 					}
 				}
 			}
