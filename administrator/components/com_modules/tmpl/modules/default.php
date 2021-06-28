@@ -147,9 +147,12 @@ if ($saveOrder && !empty($this->items))
 						</th>
 						<td class="d-none d-md-table-cell">
 							<?php if ($item->position) : ?>
-								<span class="badge <?php echo $item->activePosition ? "bg-info" : "bg-secondary"; ?>">
+								<span class="badge <?php echo $item->activePosition ? "bg-info" : "bg-secondary"; ?>" aria-labelledby="pv-<?php echo $item->id ?>">
 									<?php echo $item->position; ?>
 								</span>
+								<div role="tooltip" id="pv-<?php echo $item->id ?>"> 
+									<?php echo $item->activePosition ? Text::_('JGLOBAL_POSITION_VALID') : Text::_('JGLOBAL_POSITION_INVALID');?>
+								</div>
 							<?php else : ?>
 								<span class="badge bg-secondary">
 									<?php echo Text::_('JNONE'); ?>
