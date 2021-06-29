@@ -99,7 +99,7 @@ if (!empty($editor))
 					</th>
 					<td class="small d-none d-md-table-cell">
 						<?php if ($item->position) : ?>
-						<a class="js-position-insert btn btn-sm btn-warning w-100" href="#" data-position="<?php echo $this->escape($item->position); ?>" data-editor="<?php echo $this->escape($editor); ?>"><?php echo $this->escape($item->position); ?></a>
+						<a class="js-position-insert btn btn-sm <?php echo $item->activePosition ? 'btn-warning' : 'btn-danger';?> w-100" href="#" data-position="<?php echo $this->escape($item->position); ?>" data-editor="<?php echo $this->escape($editor); ?>"><?php echo $this->escape($item->position); ?></a>
 						<?php else : ?>
 						<span class="btn btn-sm btn-secondary w-100"><?php echo Text::_('JNONE'); ?></span>
 						<?php endif; ?>
