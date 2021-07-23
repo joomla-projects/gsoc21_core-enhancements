@@ -105,7 +105,12 @@ INSERT INTO `#__assets` (`id`, `parent_id`, `lft`, `rgt`, `level`, `name`, `titl
 (85, 18, 120, 121, 2, 'com_modules.module.108', 'Privacy Status', '{}'),
 (86, 18, 122, 123, 2, 'com_modules.module.96', 'Popular Articles', '{}'),
 (87, 18, 124, 125, 2, 'com_modules.module.97', 'Recently Added Articles', '{}'),
-(88, 18, 126, 127, 2, 'com_modules.module.98', 'Logged-in Users', '{}');
+(88, 18, 126, 127, 2, 'com_modules.module.98', 'Logged-in Users', '{}'),
+(89, 8, 128, 129, 2, 'com_modules.workflow.1', 'COM_WORKFLOW_BASIC_WORKFLOW', '{}'),
+(90, 18, 130, 131, 3, 'com_modules.state.1', 'COM_WORKFLOW_BASIC_STAGE', '{}'),
+(91, 18, 132, 133, 3, 'com_modules.transition.1', 'Publish', '{}'),
+(92, 18, 134, 135, 3, 'com_modules.transition.2', 'Unpublish', '{}'),
+(93, 18, 136, 137, 3, 'com_modules.transition.3', 'Trash', '{}');
 
 -- --------------------------------------------------------
 
@@ -1077,7 +1082,8 @@ CREATE TABLE IF NOT EXISTS `#__workflows` (
 --
 
 INSERT INTO `#__workflows` (`id`, `asset_id`, `published`, `title`, `description`, `extension`, `default`, `ordering`, `created`, `created_by`, `modified`, `modified_by`) VALUES
-(1, 56, 1, 'COM_WORKFLOW_BASIC_WORKFLOW', '', 'com_content.article', 1, 1, CURRENT_TIMESTAMP(), 42, CURRENT_TIMESTAMP(), 42);
+(1, 56, 1, 'COM_WORKFLOW_BASIC_WORKFLOW', '', 'com_content.article', 1, 1, CURRENT_TIMESTAMP(), 42, CURRENT_TIMESTAMP(), 42),
+(2, 89, 1, 'COM_WORKFLOW_BASIC_WORKFLOW', '', 'com_modules.module', 1, 1, CURRENT_TIMESTAMP(), 42, CURRENT_TIMESTAMP(), 42);
 
 -- --------------------------------------------------------
 
@@ -1126,7 +1132,8 @@ CREATE TABLE IF NOT EXISTS `#__workflow_stages` (
 --
 
 INSERT INTO `#__workflow_stages` (`id`, `asset_id`, `ordering`, `workflow_id`, `published`, `title`, `description`, `default`) VALUES
-(1, 0, 1, 1, 1, 'COM_WORKFLOW_BASIC_STAGE', '', 1);
+(1, 0, 1, 1, 1, 'COM_WORKFLOW_BASIC_STAGE', '', 1),
+(2, 18, 1, 2, 1, 'COM_WORKFLOW_BASIC_STAGE', '', 1);
 
 -- --------------------------------------------------------
 
@@ -1167,4 +1174,10 @@ INSERT INTO `#__workflow_transitions` (`id`, `asset_id`, `published`, `ordering`
 (4, 61, 1, 4, 1, 'Archive', '', -1, 1, '{"publishing":"2"}'),
 (5, 62, 1, 5, 1, 'Feature', '', -1, 1, '{"featuring":"1"}'),
 (6, 63, 1, 6, 1, 'Unfeature', '', -1, 1, '{"featuring":"0"}'),
-(7, 64, 1, 7, 1, 'Publish & Feature', '', -1, 1, '{"publishing":"1","featuring":"1"}');
+(7, 64, 1, 7, 1, 'Publish & Feature', '', -1, 1, '{"publishing":"1","featuring":"1"}'),
+(8, 92, 1, 1, 2, 'Unpublish', '', -1, 1, '{"publishing":"0"}'),
+(9, 91, 1, 2, 2, 'Publish', '', -1, 1, '{"publishing":"1"}'),
+(10, 93, 1, 3, 2, 'Trash', '', -1, 1, '{"publishing":"-2"}');
+
+INSERT INTO `#__workflow_associations` (`item_id`, `stage_id`, `extension`)
+SELECT `id`, 2, 'com_modules.module' FROM `#__modules`;
