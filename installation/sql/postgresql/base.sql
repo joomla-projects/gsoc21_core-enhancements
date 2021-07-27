@@ -112,7 +112,7 @@ INSERT INTO "#__assets" ("id", "parent_id", "lft", "rgt", "level", "name", "titl
 (86, 18, 122, 123, 2, 'com_modules.module.96', 'Popular Articles', '{}'),
 (87, 18, 124, 125, 2, 'com_modules.module.97', 'Recently Added Articles', '{}'),
 (88, 18, 126, 127, 2, 'com_modules.module.98', 'Logged-in Users', '{}'),
-(89, 8, 128, 129, 2, 'com_modules.workflow.1', 'COM_WORKFLOW_BASIC_WORKFLOW', '{}'),
+(89, 8, 128, 129, 2, 'com_modules.workflow.1', 'COM_WORKFLOW_BASIC_WORKFLOW_MODULES', '{}'),
 (90, 18, 130, 131, 3, 'com_modules.state.1', 'COM_WORKFLOW_BASIC_STAGE', '{}'),
 (91, 18, 132, 133, 3, 'com_modules.transition.1', 'Publish', '{}'),
 (92, 18, 134, 135, 3, 'com_modules.transition.2', 'Unpublish', '{}'),
@@ -1105,7 +1105,7 @@ CREATE INDEX "#__workflows_idx_checked_out" ON "#__workflows" ("checked_out");
 
 INSERT INTO "#__workflows" ("id", "asset_id", "published", "title", "description", "extension", "default", "ordering", "created", "created_by", "modified", "modified_by") VALUES
 (1, 56, 1, 'COM_WORKFLOW_BASIC_WORKFLOW', '', 'com_content.article', 1, 1, CURRENT_TIMESTAMP, 42, CURRENT_TIMESTAMP, 42),
-(2, 89, 1, 'COM_WORKFLOW_BASIC_WORKFLOW', '', 'com_modules.module', 1, 1, CURRENT_TIMESTAMP, 42, CURRENT_TIMESTAMP, 42);
+(2, 89, 1, 'COM_WORKFLOW_BASIC_WORKFLOW_MODULES', '', 'com_modules.module', 1, 1, CURRENT_TIMESTAMP, 42, CURRENT_TIMESTAMP, 42);
 
 SELECT setval('#__workflows_id_seq', 2, false);
 
