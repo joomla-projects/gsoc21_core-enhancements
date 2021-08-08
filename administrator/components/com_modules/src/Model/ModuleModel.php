@@ -1302,7 +1302,7 @@ class ModuleModel extends AdminModel implements WorkflowModelInterface
 				[
 					$db->quoteName('default') . ' = 1',
 					$db->quoteName('published') . ' = 1',
-					$db->quoteName('extension') . ' = "com_modules.module"',
+					$db->quoteName('extension') . ' = ' . $db->quote('com_modules.module'),
 				]
 			);
 
