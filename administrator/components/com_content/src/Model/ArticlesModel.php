@@ -39,6 +39,8 @@ class ArticlesModel extends ListModel
 	 */
 	public function __construct($config = array())
 	{
+		$featured = $this->isFeatured();
+
 		if (empty($config['filter_fields']))
 		{
 			$config['filter_fields'] = array(
@@ -55,7 +57,6 @@ class ArticlesModel extends ListModel
 				'created_by', 'a.created_by',
 				'created_by_alias', 'a.created_by_alias',
 				'ordering', 'a.ordering',
-				'featured', 'a.featured',
 				'featured_up', 'fp.featured_up',
 				'featured_down', 'fp.featured_down',
 				'language', 'a.language',
@@ -71,6 +72,11 @@ class ArticlesModel extends ListModel
 				'stage', 'wa.stage_id',
 				'ws.title'
 			);
+
+			if ($featured === '1')
+			{
+				$config['filter_fields'][] = 'fp.ordering';
+			}
 
 			if (Associations::isEnabled())
 			{
@@ -145,7 +151,7 @@ class ArticlesModel extends ListModel
 		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
 
-		$featured = $this->getUserStateFromRequest($this->context . '.filter.featured', 'filter_featured', '');
+		$featured = $this->isFeatured();
 		$this->setState('filter.featured', $featured);
 
 		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
@@ -349,13 +355,18 @@ class ArticlesModel extends ListModel
 		}
 
 		// Filter by featured.
-		$featured = (string) $this->getState('filter.featured');
+		$featured = $this->isFeatured();
 
 		if (in_array($featured, ['0','1']))
 		{
 			$featured = (int) $featured;
 			$query->where($db->quoteName('a.featured') . ' = :featured')
 				->bind(':featured', $featured, ParameterType::INTEGER);
+		}
+
+		if ($featured === '1')
+		{
+			$query->select($this->getDbo()->quoteName('fp.ordering'));
 		}
 
 		// Filter by access level on categories.
@@ -703,5 +714,17 @@ class ArticlesModel extends ListModel
 		}
 
 		return $items;
+	}
+
+	/**
+	 * Method to get the value of featured selector.
+	 *
+	 * @return  string  Returns the value of featured selector.
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 */
+	public function isFeatured()
+	{
+		return $this->getUserStateFromRequest($this->context . '.featured', 'featured', '');
 	}
 }
