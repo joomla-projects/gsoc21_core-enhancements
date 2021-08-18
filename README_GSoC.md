@@ -22,6 +22,8 @@ Along with these, there was 1 bonus task:
 
 ## Improve Menu Module Placement
 
+PR Link: https://github.com/joomla/joomla-cms/pull/34743
+
 This task re-invents the conventional method of placing modules from the Backend Dashboard to an easier to visualize series of steps where the users can visit a particular page in the Frontend (while logged in to an admin account), and from there, they can select the menu (automatically determined based on the page) and position of the Module by means of buttons that reflect the output of where the module will be placed if the user proceeds to create it.
 
 This task has 2 parts:
@@ -55,3 +57,9 @@ Here is a video demonstration of the overall frontend flow :
 
 https://user-images.githubusercontent.com/53610833/125059779-525ff200-e0c9-11eb-89c4-e60ccb5e19d4.mp4
 
+
+### Backend Flow
+
+Editing Modules in the Backend Admin Panel turned out to be a little tricky for the user if the template positions were not easy to visualize or if the User was unaware of the layout of the template positions. To simplify all this into an easier and efficient method, a new modal has been added to select the positions via their preview. The video below demonstrates this new modal:
+
+https://user-images.githubusercontent.com/53610833/125062858-783ac600-e0cc-11eb-9955-9fb4aa60c897.mp4
