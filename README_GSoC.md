@@ -19,6 +19,7 @@ Along with these, there was 1 bonus task:
 
 - [Display Modules Position Badge Background Color based on the Active Template Positions](#modules-position-badge)
 
+<hr>
 
 ## Improve Menu Module Placement
 
@@ -63,3 +64,30 @@ https://user-images.githubusercontent.com/53610833/125059779-525ff200-e0c9-11eb-
 Editing Modules in the Backend Admin Panel turned out to be a little tricky for the user if the template positions were not easy to visualize or if the User was unaware of the layout of the template positions. To simplify all this into an easier and efficient method, a new modal has been added to select the positions via their preview. The video below demonstrates this new modal:
 
 https://user-images.githubusercontent.com/53610833/125062858-783ac600-e0cc-11eb-9955-9fb4aa60c897.mp4
+
+<hr>
+
+## Improve the incorporation of Modules in Articles
+
+PR Link: https://github.com/joomla/joomla-cms/pull/34764
+
+This task has 2 parts:
+
+1. [Create Modules in Article Edit View](#create-modules-in-article-edit-view)
+2. [Imported Modules Tab](#imported-modules-tab)
+
+### Create Modules in Article Edit View
+
+Users can add Modules in Articles in Joomla. This is done with the help of the Module xtd-editor Plugin. However, this Plugin opens a Modal that only allows the user to select a pre-existing module, ie. there is no option to add a new module directly in the Article Edit View.
+To enhance that, this PR introduces a button to Create Modules directly in the Article Edit View:
+
+https://user-images.githubusercontent.com/53610833/125674142-803bf23a-b3a9-47e4-b6b1-8013e40d9693.mp4
+
+This is implemented using a cookie which can be read and modified by both PHP (to not display the Save and Close button in Toolbar for unsaved modules) and JavaScript (to clear this flag when we close the modal). Hiding Save and Close button is necessary here because we need to make sure that the module is saved (in our database) before we close the modal so we can grab the module's ID.
+
+This task has been implemented by re-using the existing controller functions by modifying them just enough to support backward compatibility. 
+
+
+### Imported Modules Tab
+
+This tab allows us to perform Edit and Remove operations on the imported module using buttons.
