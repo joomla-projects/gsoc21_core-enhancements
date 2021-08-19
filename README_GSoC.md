@@ -215,7 +215,7 @@ $query->select($db->quoteName('w.title', 'workflow_title'))
 
 PR Link: https://github.com/joomla/joomla-cms/pull/35228
 
-The primary aim for this task was to refactor the code in order to enhance the code re-usability and eliminate redundancy.
+The primary aim for this task was to refactor the code in order to enhance the code re-usability and eliminate redundancy. It eliminates redundancy by merging the different files that were made for the Model, View, Controller and Template of the featured articles and all articles into a common MVC.
 <br>
 
 ### [A] New Selector Dropdown
