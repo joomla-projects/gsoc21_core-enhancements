@@ -21,6 +21,8 @@ Along with these, there was 1 bonus task:
 
 <br>
 
+## Pull Requests
+
 | Task                                             | Project Repo PR                                                               | Joomla CMS Repo PR                                           |
 |--------------------------------------------------|-------------------------------------------------------------------------------|--------------------------------------------------------------|
 | Improve Menu Module Placement                    | [PR #1](https://github.com/joomla-projects/gsoc21_core-enhancements/pull/1)   | [PR #34743](https://github.com/joomla/joomla-cms/pull/34743) |
@@ -207,5 +209,49 @@ $query->select($db->quoteName('w.title', 'workflow_title'))
 
 ![image](https://user-images.githubusercontent.com/53610833/127372084-a33fff64-3a05-4189-a00e-0d6ac782b6f9.png)
 
+<hr>
 
+## Merge Featured Articles into Articles
 
+PR Link: https://github.com/joomla/joomla-cms/pull/35228
+
+The primary aim for this task was to refactor the code in order to enhance the code re-usability and eliminate redundancy.
+<br>
+
+### [A] New Selector Dropdown
+A searchtools selector is added that can be used to toggle between:
+
+Option | Value
+------------ | -------------
+All  | ""
+Unfeatured  | 0
+Featured  | 1
+
+![dropdown](https://user-images.githubusercontent.com/53610833/128350490-c5d83ab1-2ffb-42f7-8ecc-27cde5d658c5.gif)
+
+<br>
+
+### [B] Model Merged
+- A new method to return the featured selector filter parameter using the getUserState from request
+```php
+$featured = $this->getUserStateFromRequest($this->context . '.featured', 'featured', '');
+```
+- The advantage of the above is that we can also pass the value as a GET param to the URL which helps us to make redirect URLs that can initialize the value of this dropdown
+- `$featured` variable is used as a condition to manipulate the query to adjust to Featured
+
+<br>
+
+### [C] Templates Merged
+- We use `state->get('featured')` to conditonally render the template code as per featured or not.
+
+<br>
+
+### [D] Views Merged
+- We use `state->get('featured')` to conditonally render the toolbar options
+
+<br>
+
+### [E] Controller Merged
+- Merged the delete function from FeaturedController
+
+<br>
