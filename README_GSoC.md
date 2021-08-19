@@ -1,6 +1,6 @@
 #  Joomla! Core Enhancements | GSoC'21 
 
-![Joomla@GSoC](https://community.joomla.org/images/blogs/2021/GSoC-CJO-Blogpost-Students-2021-Feature-enhancement-Yatharth-Vyas.png)
+![Joomla GSoC Banner](https://community.joomla.org/images/blogs/2021/GSoC-CJO-Blogpost-Students-2021-Feature-enhancement-Yatharth-Vyas.png)
 
 
 ## Introduction
@@ -50,9 +50,14 @@ This task has 2 parts:
         3. `&menu=:id` is used to pass the menu id of the current page as a GET param
 
 - **New Controller: /com_modules/Module/selectPosition**
-   * Saves the Position and Menu ID which is passed as a GET param in URL by the previous step in the User State,
+   * Saves the Position and Menu ID which is passed as a GET param in URL by the previous step in the User State <br> <br>
+    ```php
+    $app->setUserState('com_modules.add.module.menu_id', $menuId);
+    $app->setUserState('com_modules.add.module.position', $position);
+    ```
    * Redirects to Module Select View where user can select the Module Type
    * After the Module Type has been selected, these state items (Position and Menu ID) is used to pre-fill the Position Name and Menu ID
+
 
 Here is a video demonstration of the overall frontend flow :
 
@@ -110,3 +115,87 @@ $regexmodid = '/{loadmoduleid\s([1-9][0-9]*)}/i';
 ```
 
 ![Imported Modules Tab](https://user-images.githubusercontent.com/53610833/126033410-9581b90e-0583-4d95-893c-e730daa899fd.png)
+
+<hr>
+
+## Integrate Workflows in Modules Component
+
+PR Link: https://github.com/joomla/joomla-cms/pull/35101
+
+
+### Access
+- The corresponding access.xml actions have been added.
+
+### Articles Model
+- The `getListQuery()` method joins the old query with workflow_associations to also consider the workflow stages that belong to `com_content.articles` only.
+
+### SQL Changes:
+- The following have been added to the Database Tables:
+    - 1 new workflow: `COM_WORKFLOW_BASIC_WORKFLOW_MODULES`
+    - 1 new stage:  `COM_WORKFLOW_BASIC_STAGE`
+    - 3 new transitions: Publish, Unpublish, and Trash
+- Workflow Associations have been created for all existing modules via an update script / a query during Installation.
+
+### Introduce a new Backend Menu Item
+- A new menu item for Modules: Workflows to execute CRUD for `com_modules`
+
+### Option to Enable Workflow Integration
+- This can be toggled from Global Configuration
+
+### Searchtools Filtering
+- Option to filter modules via their stage
+
+### ModulesComponent.php
+- Added necessary functions that are used by Workflow Plugins (Workflows, Featuring and Publishing)
+
+### Module Model
+- The get query now takes into account the workflow stage associated with each module.
+- Added Workflow before and after Save events
+- Added a function to get the initial stage for a module (default workflow and default stage)
+- Added a query to create workflow association while duplicating modules
+- Added a function that prepares the workflow field
+
+### Modules Model
+- Add a filterForm function to filter based on workflow stage
+- Join the query with workflow associations
+```php
+// Join over the workflows association
+$query->select($db->quoteName('wa.stage_id', 'stage_id'))
+	->join('INNER', $db->quoteName('#__workflow_associations', 'wa'), $db->quoteName('wa.item_id') . ' = ' . $db->quoteName('a.id'))
+	->where($db->quoteName('wa.extension') . ' = ' . $db->quote('com_modules.module'));
+
+// Join over the workflows stage
+$query->select(
+	[
+		$db->quoteName('ws.title', 'stage_title'),
+		$db->quoteName('ws.workflow_id', 'workflow_id')
+	])
+	->join('INNER', $db->quoteName('#__workflow_stages', 'ws'), $db->quoteName('ws.id') . ' = ' . $db->quoteName('wa.stage_id'));
+
+// Join over the workflows
+$query->select($db->quoteName('w.title', 'workflow_title'))
+	->join('INNER', $db->quoteName('#__workflows', 'w'), $db->quoteName('w.id') . ' = ' . $db->quoteName('ws.workflow_id'));
+```
+
+### Modules Template:
+- Added workflows column to the table
+- This column is conditionally rendered when workflows are enabled
+- Added workflows field to default batch body
+
+### The Flow:
+1. When creating new modules you have to select a workflow and when you save, the default stage under this workflow_id is set as the initial stage of the module.
+2. When editing exiting modules, the workflow transition field is shown instead of the workflow_id field, which works similarly to com_content.
+
+#### New Modules: Select Workflow 
+
+(Permanent similar to workflow assignment for com_content)
+
+![image](https://user-images.githubusercontent.com/53610833/127371792-76191d17-2556-4147-be8d-6e95f835f657.png)
+
+
+#### Edit Existing Modules: Transition Field
+
+![image](https://user-images.githubusercontent.com/53610833/127372084-a33fff64-3a05-4189-a00e-0d6ac782b6f9.png)
+
+
+
