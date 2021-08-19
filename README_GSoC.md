@@ -248,3 +248,15 @@ $featured = $this->getUserStateFromRequest($this->context . '.featured', 'featur
 - Merged the delete function from FeaturedController
 
 <br>
+
+## Mentors
+
+My mentors have been an integral part of my journey. It was their constant guidance that helped me complete all my tasks successfully and submit robust code. Thank you:
+
+1. Christiane Maier-Stadtherr
+2. Niels Braczek
+3. Benjamin Trenkle
+4. Achilleas Papageorgiou
+5. Luca Marzo
+
+And Special Thanks to Richard Fath
