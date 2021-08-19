@@ -90,4 +90,23 @@ This task has been implemented by re-using the existing controller functions by 
 
 ### Imported Modules Tab
 
-This tab allows us to perform Edit and Remove operations on the imported module using buttons.
+This tab allows us to perform Edit and Remove operations on the imported module using buttons. It displays Modules that are imported using any of the 3 possible syntaxes (supports older import syntaxes for backwards compatibility):
+
+1. `{loadmoduleid :id}`
+2. `{loadmodules :mod_type}`
+3. `{loadposition :position, :card_style}`
+
+These are matched using regex:
+
+```php
+// Expression to search for (positions)
+$regex = '/{loadposition\s(.*?)}/i';
+
+// Expression to search for (modules)
+$regexmod = '/{loadmodule\s(.*?)}/i';
+
+// Expression to search for (id)
+$regexmodid = '/{loadmoduleid\s([1-9][0-9]*)}/i';
+```
+
+![Imported Modules Tab](https://user-images.githubusercontent.com/53610833/126033410-9581b90e-0583-4d95-893c-e730daa899fd.png)
