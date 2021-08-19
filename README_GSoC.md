@@ -229,7 +229,6 @@ Featured  | 1
 
 ![dropdown](https://user-images.githubusercontent.com/53610833/128350490-c5d83ab1-2ffb-42f7-8ecc-27cde5d658c5.gif)
 
-<br>
 
 ### [B] Model Merged
 - A new method to return the featured selector filter parameter using the getUserState from request
@@ -239,17 +238,11 @@ $featured = $this->getUserStateFromRequest($this->context . '.featured', 'featur
 - The advantage of the above is that we can also pass the value as a GET param to the URL which helps us to make redirect URLs that can initialize the value of this dropdown
 - `$featured` variable is used as a condition to manipulate the query to adjust to Featured
 
-<br>
-
 ### [C] Templates Merged
 - We use `state->get('featured')` to conditonally render the template code as per featured or not.
 
-<br>
-
 ### [D] Views Merged
 - We use `state->get('featured')` to conditonally render the toolbar options
-
-<br>
 
 ### [E] Controller Merged
 - Merged the delete function from FeaturedController
