@@ -19,6 +19,16 @@ Along with these, there was 1 bonus task:
 
 - [Display Modules Position Badge Background Color based on the Active Template Positions](#modules-position-badge)
 
+<br>
+
+| Task                                             | Project Repo PR                                                               | Joomla CMS Repo PR                                           |
+|--------------------------------------------------|-------------------------------------------------------------------------------|--------------------------------------------------------------|
+| Improve Menu Module Placement                    | [PR #1](https://github.com/joomla-projects/gsoc21_core-enhancements/pull/1)   | [PR #34743](https://github.com/joomla/joomla-cms/pull/34743) |
+| Improve the incorporation of Modules in Articles | [PR #8](https://github.com/joomla-projects/gsoc21_core-enhancements/pull/8)   | [PR #34764](https://github.com/joomla/joomla-cms/pull/34764) |
+| Integrate Workflows in Modules Component         | [PR #10](https://github.com/joomla-projects/gsoc21_core-enhancements/pull/10) | [PR #35101](https://github.com/joomla/joomla-cms/pull/35101) |
+| Merge Featured Articles into Articles            | [PR #11](https://github.com/joomla-projects/gsoc21_core-enhancements/pull/11) | [PR #35228](https://github.com/joomla/joomla-cms/pull/35228) |
+| Bonus - Modules Position Badge                   | [PR #3](https://github.com/joomla-projects/gsoc21_core-enhancements/pull/3)   | Coming Soon                                                  |
+
 <hr>
 
 ## Improve Menu Module Placement
