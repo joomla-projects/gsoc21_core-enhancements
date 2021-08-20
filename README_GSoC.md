@@ -247,7 +247,35 @@ $featured = $this->getUserStateFromRequest($this->context . '.featured', 'featur
 ### [E] Controller Merged
 - Merged the delete function from FeaturedController
 
-<br>
+<hr>
+
+
+## Modules Position Badge
+
+This was a bonus task. The aim here was to display a visual indication of the positions that aren't a part of any of the active displayed template styles. This could help the users understand if there was any position that is valid but not active.
+
+###F `getValidPositions()`
+
+Added a new model method `getValidPositions` that performs the following:
+1. Fetch the active template from the database (1 Query)
+![sql](https://user-images.githubusercontent.com/53610833/130259325-707cb133-8930-4154-ab34-f15d516881f4.png)
+
+2. Get the `templateDetails.xml` file corresponding to the template received as a result of Step 1
+3. Store these positions in an array and return it
+
+The array returned from the above model method will be used in the `_getList` function as:
+1. Stored the result of the `getValidPositions`  method in an array
+2. After fetching all modules from the database for rendering, perform a check whether each module row's position exists in the array of step 1
+        If `yes`, set `$row->activePosition` to `true`
+        If `no`, set `$row->activePosition` to `false`
+
+Finally, in the `tmpl` file, we use this `activePosition` flag to conditionally select between `bg-primary` and `bg-secondary`
+
+Badges for In-active (not of the active template) Positions have a `bg-secondary` class
+
+![image](https://user-images.githubusercontent.com/53610833/122663117-d2272a80-d1b5-11eb-8a94-57e00c94507b.png)
+
+<hr>
 
 ## Mentors
 
@@ -259,4 +287,11 @@ My mentors have been an integral part of my journey. It was their constant guida
 4. Achilleas Papageorgiou
 5. Luca Marzo
 
-And Special Thanks to Richard Fath
+Special Thanks to Richard Fath <br>
+And my fellow Joomla GSoC Student Developers: [Kumar Shivam](https://github.com/Krshivam25), [Rishabh Ranjan Jha](http://github.com/rjharishabh), [Rahul Saini](https://github.com/rs4231199) and [Eyvaz Ahmadzada](https://github.com/eyvazahmadzada)
+
+<hr>
+
+## Future Roadmap
+
+Although the first iteration of the all the tasks have been completed and are in a functional stage, there is always scope for improvement. I plan to continue being involved with Joomla. I will push regular commits as and when more reviews and suggestions drop in. I also plan to extend my involvement in other possible ways including contribution to the main repo, fixing bugs, reviewing PRs and helping new contributors learn their way through the codebase.
