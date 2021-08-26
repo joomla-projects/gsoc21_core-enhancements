@@ -196,7 +196,7 @@ $query->select($db->quoteName('w.title', 'workflow_title'))
 
 ### The Flow:
 1. When creating new modules you have to select a workflow and when you save, the default stage under this workflow_id is set as the initial stage of the module.
-2. When editing exiting modules, the workflow transition field is shown instead of the workflow_id field, which works similarly to com_content.
+2. When editing existing modules, the workflow transition field is shown instead of the workflow_id field, which works similarly to com_content.
 
 #### New Modules: Select Workflow 
 
