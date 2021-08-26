@@ -296,4 +296,4 @@ And my fellow Joomla GSoC Student Developers: [Kumar Shivam](https://github.com/
 
 ## Future Roadmap
 
-Although the first iteration of the all the tasks have been completed and are in a functional stage, there is always scope for improvement. I plan to continue being involved with Joomla. I will push regular commits as and when more reviews and suggestions drop in. I also plan to extend my involvement in other possible ways including contribution to the main repo, fixing bugs, reviewing PRs and helping new contributors learn their way through the codebase.
+Although the first iteration of all the tasks has been completed and is in a functional stage, there is always scope for improvement. I plan to continue being involved with Joomla. I will push regular commits as and when more reviews and suggestions drop in. I plan to extend my involvement in other possible ways, including contributing to the main repo, fixing bugs, reviewing PRs and helping new contributors learn through the codebase.
