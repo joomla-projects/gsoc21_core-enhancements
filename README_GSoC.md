@@ -241,10 +241,10 @@ $featured = $this->getUserStateFromRequest($this->context . '.featured', 'featur
 - `$featured` variable is used as a condition to manipulate the query to adjust to Featured
 
 ### [C] Templates Merged
-- We use `state->get('featured')` to conditonally render the template code as per featured or not.
+- We use `state->get('featured')` to conditionally render the template code as per featured or not.
 
 ### [D] Views Merged
-- We use `state->get('featured')` to conditonally render the toolbar options
+- We use `state->get('featured')` to conditionally render the toolbar options
 
 ### [E] Controller Merged
 - Merged the delete function from FeaturedController
