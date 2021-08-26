@@ -254,7 +254,7 @@ $featured = $this->getUserStateFromRequest($this->context . '.featured', 'featur
 
 ## Modules Position Badge
 
-This was a bonus task. The aim here was to display a visual indication of the positions that aren't a part of any of the active displayed template styles. This could help the users understand if there was any position that is valid but not active.
+This was a bonus task. The aim here was to visually indicate the positions that aren't a part of any of the active template styles. This could help the users understand if there was any position that is valid but not active.
 
 ###F `getValidPositions()`
 
