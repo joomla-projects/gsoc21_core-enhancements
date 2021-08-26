@@ -200,12 +200,14 @@ $query->select($db->quoteName('w.title', 'workflow_title'))
 
 #### New Modules: Select Workflow 
 
-(Permanent similar to workflow assignment for com_content)
+Similar to workflow assignment for com_content where we linked it to a category to initialize its workflow. We can select the workflow associated with it upon creation.
 
 ![image](https://user-images.githubusercontent.com/53610833/127371792-76191d17-2556-4147-be8d-6e95f835f657.png)
 
 
 #### Edit Existing Modules: Transition Field
+
+This field is only shown for modules that have already been created. Here instead of selecting the workflow associated, we can execute transitions.
 
 ![image](https://user-images.githubusercontent.com/53610833/127372084-a33fff64-3a05-4189-a00e-0d6ac782b6f9.png)
 
