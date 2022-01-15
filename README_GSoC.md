@@ -7,6 +7,8 @@
 
 Reference: [Project Idea Link](https://docs.joomla.org/GSoC_2021_Project_Ideas#Project_III:_Feature_enhancement)
 
+Project Plan: [Project Plan Link](https://docs.google.com/document/d/1Pl8JGa2hkYkmJzQOn9_mS8a4imDmqc2a/edit#heading=h.rjr72vzzlb4)
+
 Core Enhancements covers 4 tasks:
 
 1. [Improve Menu Module Placement](#improve-menu-module-placement)
